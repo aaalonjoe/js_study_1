@@ -11,14 +11,10 @@
 "키 -> 178.4cm, 체중-> 78.2kg의 체질량지수는: 24.57입니다"
 */
 
-var h = 178.4, w = 78.2;
-var myBmi = calcBMI(h, w);
-console.log(`키 -> ${h}cm, 체중 -> ${w}kg의 체질량지수는 ${myBmi}입니다.`);
 
 
-
-function calcBMI(h, w) {
-    myBmi = w / ((h * 0.01) ** 2);
+function calcBMI(height, weight) {
+    var myBmi = weight / ((height * 0.01) ** 2);
     if (myBmi >= 25.0) {
         console.log('당신은 과체중입니다.'); 
     } else if (myBmi <= 18.5) {
@@ -26,6 +22,11 @@ function calcBMI(h, w) {
     } else {
         console.log('당신은 정상체중입니다.');
     }
+    return myBmi;
+}    
 
-    
-}
+
+var h = 178.4, w = 78.2;
+
+var myBmi = calcBMI(h, w);
+console.log(`키 -> ${h}cm, 체중 -> ${w}kg의 체질량지수는 ${myBmi}입니다.`);

@@ -9,12 +9,9 @@ Q. n의 약수의 개수를 구하기
    나누어 떨어졌을 시 약수의 개수 카운트를 1증가시키고 출력.
 */
 
-// 호출부
-var divCount = calcDivisor(20);
-console.log(`약수의 개수: ${divCount}개`);
 
 function calcDivisor(targetNumber) {
-
+    
     var divisor = [];                      // 약수들을 저장할 배열
     for (var n = 1; n <= targetNumber; n++) {
         if (targetNumber % n === 0) {      // if문이 참이 n이 약수
@@ -24,3 +21,8 @@ function calcDivisor(targetNumber) {
     console.log(`${targetNumber}의 약수: [${divisor}]`);
     return divisor.length;
 }
+
+
+// 호출부
+var divCount = calcDivisor(20);
+console.log(`약수의 개수: ${divCount}개`);
