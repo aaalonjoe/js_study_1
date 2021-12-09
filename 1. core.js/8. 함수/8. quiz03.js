@@ -14,15 +14,15 @@
 
 
 function calcBMI(height, weight) {
-    var myBmi = weight / ((height * 0.01) ** 2);
-    if (myBmi >= 25.0) {
+    var Bmi = weight / ((height * 0.01) ** 2);
+    if (Bmi >= 25.0) {
         console.log('당신은 과체중입니다.'); 
-    } else if (myBmi <= 18.5) {
+    } else if (Bmi <= 18.5) {
         console.log('당신은 저체중입니다.');
     } else {
         console.log('당신은 정상체중입니다.');
     }
-    return myBmi;
+    return Bmi;
 }    
 
 
