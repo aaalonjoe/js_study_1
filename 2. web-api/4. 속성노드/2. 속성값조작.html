@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <input type="text" id="user-name" value="홍길동">
+
+    <script>
+
+        // 속성, 값, 키 헷갈리지 말기
+
+        const $input = document.getElementById('user-name');
+
+        // const uName = $input.attributes.value.value;
+        const uName = $input.getAttribute('value');   // 괄호안에 속성이름 넣기
+        console.log(uName);
+
+        console.log($input.getAttribute('id'));
+
+        // 속성값 변경
+        // $input.attributes.value.value = '김철수';
+        $input.setAttribute('value', '김철수');   // (바꿀 속성, 바꿀 값)
+        $input.setAttribute('id', 'member-name');   // (바꿀 속성, 바꿀 값)
+
+        // 속성값 제거
+        $input.removeAttribute('value');  // 없앨 속성
+
+        // 속성값 추가
+        $input.setAttribute('placeholder', '이름은 한글로~');   // 없는 속성 쓰고 , 값 넣으면 추가됨
+
+        // 속성값 존재 유무 확인
+        if ($input.hasAttribute('type')) {
+            alert('타이틀 속성 있음!!');
+        }
+
+    </script>
+
+</body>
+</html>
