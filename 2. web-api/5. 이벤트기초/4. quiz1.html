@@ -23,15 +23,19 @@
         // 이벤트 핸들러를 구현하세요.
         // 힌트) css의 display: none;
         
-        const $hider = document.querySelector('#hider');
-        const $text = document.querySelector('.text');
-        $hider.addEventListener('click', function() {
-            $text.style.display = 'none';
-            $hider.textContent = '텍스트 보이기!';
-        });
-        // $hider.addEventListener('click', function() {
-        //     $text.style.display = 'block';
-        // });
+        const $btn = document.querySelector('#hider');
+        
+        $btn.onclick = () => {
+            const $text = document.querySelector('.text');
+
+            if ($text.classList.contains('hide')) {
+            $text.classList.add('hide');
+            $btn.textContent = '텍스트 보이기!';
+            } else {
+            $text.classList.remove('hide');
+            $btn.textContent = '텍스트 숨기기!';
+            }
+        }
 
     </script>
 
