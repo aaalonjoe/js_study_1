@@ -81,6 +81,16 @@
         // 버블링 (부모 ul에 이벤트부여)
         $fruits.onclick = activate;
 
+        const $btn = document.querySelector('#add');
+        $btn.onclick = e => {
+            const $newLi = document.createElement('li');
+            const $textBox = document.querySelector('.text-box');
+            $newLi.textContent = $textBox.value;
+            $fruits.appendChild($newLi);
+            
+        }
+
+
     </script>
 
 </body>
