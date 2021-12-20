@@ -8,6 +8,7 @@
     <style>
         #fruits {
             display: flex;  /* 수평정렬 */
+            flex-wrap: wrap; /* 줄바뀌면 밑으로 떨어뜨리기 */
             list-style: none;
             padding: 20px;
             border: 2px solid red;
@@ -17,6 +18,7 @@
             cursor: pointer;
             background: orange;
             margin-right: 10px;
+            text-align: center;
         }
         .active {
             color: red;
@@ -81,12 +83,22 @@
         // 버블링 (부모 ul에 이벤트부여)
         $fruits.onclick = activate;
 
-        const $btn = document.querySelector('#add');
-        $btn.onclick = e => {
-            const $newLi = document.createElement('li');
+        // 버튼 요소 노드
+        const $add = document.querySelector('#add');
+        $add.onclick = e => {
             const $textBox = document.querySelector('.text-box');
+            // console.log($textBox.value);  한번 확인해주기
+
+            // <li id="orange">Orange</li>
+            const $newLi = document.createElement('li');
             $newLi.textContent = $textBox.value;
+            // toLowerCase(): 문자열을 전부 소문자로 변화 <-> toUpperCase()
+            $newLi.setAttribute('id', $newLi.textContent.toLowerCase());
+
+            // ul의 마지막 자식으로 추가
             $fruits.appendChild($newLi);
+            // input창 비우기
+            $textBox.value = '';
             
         }
 
