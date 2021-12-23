@@ -112,12 +112,64 @@ function changeCheckState($label) {
     
 }
 
-// 삭제 처리 
-function removeTodoData(target) {
+// 삭제 처리 함수
+function removeTodoData($targetLi) {
     
-    // 삭제 렌더링 처리
+    // 1. 화면처리: ul에서 눌린 삭제버튼에 해당하는 li를 제거
     const $toDoList = document.querySelector('.todo-list');
-    $toDoList.removeChild(target.parentElement);
+    $toDoList.removeChild($targetLi);
+
+    // 2. 데이터처리: 배열에서 제거된 li정보를 가진 객체 제거
+    todos.splice(findIndexById(+$targetLi.dataset.id), 1);
+    console.log(todos);
+}
+
+// 수정모드 진입 함수
+function enterModifyMode($modSpan) {
+    // const $text = document.querySelector('span.text');
+    // // $text.parentElement.removeChild($text.lastElementChild);
+    // const $newInput = document.createElement('input');
+    // $newInput.getAttribute('text');
+    // console.log($newInput);
+    
+    // 1. span의 클래스를 교체하여 버튼아이콘 변경
+    $modSpan.classList.replace('lnr-undo', 'lnr-checkmark-circle');
+
+    // 교체대상 span.text
+    const $textSpan = $modSpan.parentElement.previousElementSibling.lastElementChild;
+    
+    // input 만들기
+    const $modInput = document.createElement('input');  // <input>
+    $modInput.setAttribute('type', 'text');      // <input type="text">
+    $modInput.classList.add('modify-input');   // <input type="text" class="modify-input">
+    $modInput.setAttribute('value', $textSpan.textContent);
+
+    // 노드 교체
+    const $label = $textSpan.parentElement;
+    $label.replaceChild($modInput, $textSpan);
+
+}
+
+function modifyTodoData($modSpan) {
+    // 1. 아이콘 변경
+    $modSpan.classList.replace('lnr-checkmark-circle', 'lnr-undo');
+
+    // 교체대상 input
+    const $modInput = $modSpan.parentElement.previousElementSibling.lastElementChild;
+    
+    // span.text 만들기
+    const $textSpan = document.createElement('span');
+    $textSpan.classList.add('text');
+    $textSpan.textContent = $modInput.value;
+
+    // 노드교체
+    const $label = $modInput.parentElement;
+    $label.replaceChild($textSpan, $modInput);
+    
+    // 데이터 처리 (배열 내부 객체 text프로퍼티 수정)
+    const index = findIndexById(+$label.parentElement.dataset.id);
+    todos[index].text = $textSpan.textContent;
+    console.log(todos);
 }
 
 // ================ 메인 실행부 ==================== //
@@ -134,18 +186,23 @@ function removeTodoData(target) {
 
     // 할일 완료 이벤트 (체크)
     const $toDoList = document.querySelector('.todo-list');
-    $toDoList.addEventListener('change', e => {          // change는 input의 속성이 바뀔때
-        
+    $toDoList.addEventListener('change', e => {          // change는 input의 속성이 바뀔때 
+        if (!e.target.matches('.checkbox input[type=checkbox]')) return;
         changeCheckState(e.target.parentElement); 
     });
 
-    // 할 일 삭제버튼 클릭 이벤트
+    // 할 일 수정/삭제버튼 클릭 이벤트
     $toDoList.addEventListener('click', e => {
         
-        if (!e.target.matches('div.remove span.lnr-cross-circle')) return;
-
-        removeTodoData(e.target);  // 삭제처리
-
-
+        if (e.target.matches('div.remove span.lnr-cross-circle')) {
+            removeTodoData(e.target.parentElement.parentElement);  // 삭제처리
+        } else if (e.target.matches('div.modify span.lnr-undo')) {// 수정버튼
+            enterModifyMode(e.target);                         // 수정모드 진입처리
+        } else if (e.target.matches('div.modify span.lnr-checkmark-circle')) {
+            modifyTodoData(e.target);
+        }
+        
     });
+
+
 })();
