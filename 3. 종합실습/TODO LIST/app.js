@@ -172,6 +172,29 @@ function modifyTodoData($modSpan) {
     console.log(todos);
 }
 
+// 할일 추가시 입력값 검증
+function isValidate() {
+
+    const $todoText = document.getElementById('todo-text');
+
+    // trim(): 문자열의 앞뒤 공백을 제거함
+    if ($todoText.value.trim() === '') {   // 아무것도 안써있으면 나가
+        $todoText.style.background = 'orangered';
+        $todoText.setAttribute('placeholder', '필수 입력사항입니다!');
+        $todoText.value = '';
+        return false;
+    } else if ($todoText.value.length > 10) {
+        $todoText.style.background = 'orangered';
+        $todoText.setAttribute('placeholder', '글자 수는 10글자 이내로 쓰세요!');
+        $todoText.value = '';
+        return false;
+    } else {
+        $todoText.style.background = '';
+        $todoText.setAttribute('placeholder', '할 일을 입력하세요');
+        return true;
+    }
+}
+
 // ================ 메인 실행부 ==================== //
 
 (function() {
@@ -181,7 +204,12 @@ function modifyTodoData($modSpan) {
     $addBtn.addEventListener('click', e => {
         e.preventDefault();
         
-        insertTodoData();
+        if (isValidate()) {           // 검사 통과했니? 그럼 진행해! 아니면 하지마!
+            insertTodoData();
+            
+        } else {
+            
+        }
     });
 
     // 할일 완료 이벤트 (체크)
