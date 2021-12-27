@@ -1,3 +1,4 @@
+
 .wrap {
     padding: 50px;
     height: 100vh;
@@ -26,6 +27,11 @@
     font-size: 30px;
 }
 
+.clearfix::after {
+    display: block;
+    content: '';
+    clear: both;
+}
 
 /* 친구 목록 */
 .template .friend-list {
@@ -36,10 +42,20 @@
 .template .friend-list ul.list li {
     font-size: 18px;
     margin-bottom: 20px;
-    border: 1px solid #000;
+    cursor: pointer;
 }
+.template .friend-list ul.list li .list-info {
+    float: left;
+}
+
 .template .friend-list ul.list li .mod {
-    display: inline;
+    float: right;
+}
+.template .friend-list ul.list li .mod:nth-child(2) {
+    display: none;
+}
+.template .friend-list ul.list li:hover .mod:nth-child(2) {
+    display: block;
 }
 
 /* 수정 제거 버튼 */
@@ -107,7 +123,13 @@
     display: block;
     margin-bottom: 15px;
 }
-
+.template footer .info label input {
+    padding-left: 10px;
+    border: 1px solid #999;
+}
+.template footer .info label input:focus {
+    outline: 1px solid #43f76a;
+}
 .template footer .info label.name input {
     border-radius: 5px;
     height: 25px;
