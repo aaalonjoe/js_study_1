@@ -10,7 +10,81 @@
 </head>
 <body>
     
-    
+    <button id="load">서버에서 회원정보 불러오기</button>
+
+    <ul class="content"></ul>
+
+    <script>
+
+        // 서버가 응답한 정보를 화면에 렌더링
+        function makeResultDOM(response) {
+            /*
+                서버가 응답한 데이터는 마치 자바스트립트의
+                객체, 배열 형태로 보이지만 사실은 아닙니다.
+                이런 형태의 배열을 JSON이라 부릅니다. JS가 아님.
+                JavaScript Object Notation 자바스크립트 객체 표기법!
+
+                JSON은 자바스크립트가 아닌 독립적 데이터 포맷이기
+                때문에 사용하려면 자바스크립트로 변환해서 써야합니다.
+
+                # json -> js : JSON.parse()
+                # js -> json : JSON.stringfy()
+            */
+            const userList = JSON.parse(response);   //json을 js로 변환
+            console.log(userList[0].userName);
+
+            const $ul = document.querySelector('.content');
+            for (let user of userList) {
+                const {account, userName, address} = user;  // 구조분해할당
+                const $li = document.createElement('li');
+                // 구조분해할당 안하면 전부 앞에 user. 붙어야함
+                $li.textContent = `# 아이디: ${account}, 이름: ${userName}, 주소: ${address}`;
+
+                $ul.appendChild($li);
+            }
+
+        }
+
+
+
+        const $loadBtn = document.getElementById('load');
+
+        $loadBtn.onclick = e => {
+
+            // http요청을 서버로 보내는 방법
+            // 1. XMLHttpRequest 객체를 생성
+            const xhr = new XMLHttpRequest();
+
+            // 2. http 요청 설정 (요청방식, 요청 URL)
+            /*
+                - 요청 방식:
+                a. GET - 조회
+                b. POST - 등록
+                c. PUT - 수정
+                d. DELETE - 삭제
+            */
+            xhr.open('GET', 'http://localhost:5000/user');
+
+            // 3. http 요청 전송
+            xhr.send();
+
+            // 4. 응답정보 확인
+            xhr.onload = e => {
+                // 응답코드        200은 성공 , 404는 실패
+                console.log(xhr.status); 
+                // 응답 데이터 확인
+                // console.log(xhr.response);
+
+                if (xhr.status === 200) {
+                    makeResultDOM(xhr.response);
+                } else {
+                    console.error('통신 실패!');
+                }
+            };
+
+        }
+
+    </script>
 
 </body>
 </html>
