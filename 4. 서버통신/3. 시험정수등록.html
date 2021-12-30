@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        label {
+            display: block;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>시험 점수 등록</h1>
+    <div class="register">
+        <label>
+            # 이름 : <input type="text" name="name">
+        </label>
+        <label>
+            # 국어 : <input type="text" name="kor">
+        </label>
+        <label>
+            # 영어 : <input type="text" name="eng">
+        </label>
+        <label>
+            # 수학 : <input type="text" name="math">
+        </label>
+    
+        <button id="insert">확인</button>
+        <hr>
+    </div>
+    <ul class="content"></ul>
+
+    <script>
+
+        // 데이터 받기
+        function load () {
+            $ul = document.querySelector('.content');
+            
+        }
+
+
+        // 데이터 전송
+        const $insert = document.getElementById('insert');
+        $insert.onclick = e => {
+            e.preventDefault();
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://192.168.1.91:8181/api/score');
+
+            const newData = {
+                name: document.querySelector('input[name=name]').value,
+                kor: document.querySelector('input[name=kor]').value,
+                eng: document.querySelector('input[name=eng]').value,
+                math: document.querySelector('input[name=math]').value,
+            }
+            console.log(newData);
+            
+            const sendData = JSON.stringify(newData);
+            
+            xhr.setRequestHeader('content-type', 'application/json');
+
+            xhr.send(sendData);
+        };
+
+    </script>
+
+</body>
+</html>
