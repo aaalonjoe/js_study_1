@@ -97,6 +97,26 @@
         // };
 
 
+        // 점수 삭제 요청
+        function deleteScoreData($target) {
+            
+            const xhr = new XMLHttpRequest();
+            const stuNum = $target.dataset.stuNum;
+            console.log('학번: ' + stuNum);
+            xhr.open('DELETE', URL + '/' + stuNum);  // 문법이아니라 백엔드에서 만듬
+            xhr.send();
+
+            xhr.onload = e => {
+                if(xhr.status === 200) {
+                    removeAll();
+                    getList();
+                } else {
+                    alert('삭제 실패!')
+                }
+            }
+
+        }
+
         //점수리스트 렌더링
         function makeScoreListDOM(resp) {
             const scoreList = JSON.parse(resp);
@@ -112,30 +132,25 @@
                 let tag = `
                     <li>
                         # 학번: ${stuNum}, 이름: ${name}, 국어: ${kor}점, 영어: ${eng}점, 수학: ${math}점, 총점: ${total}점, 평균: ${average}점
-                        <a class='del-btn' href='#'>삭제</a>
+                        <a data-stu-num='${stuNum}' class='del-btn' href='#'>삭제</a>
                     </li>    
                 `;
                 $ul.innerHTML += tag;
                         
-                // 삭제버튼 이벤트
-                delData();
             }
-        }
+            // 삭제버튼 이벤트
+            // li가 가상돔이기때문에 만들어지는 시점에 효과주기
+            $ul.addEventListener('click', e => {
+                e.preventDefault();
+                if (!e.target.matches('ul li .del-btn')) return;
+                console.log('삭제버튼 클릭');
 
-        function delData() {
-            document.querySelector('.score-list').onclick = e => {
-                if (e.target.matches('a')) {
-                    
-                    const xhr = new XMLHttpRequest();
-
-                    xhr.open('DELETE', `http://192.168.1.91:8181/api/score/84`);
-                    xhr.send();
-
-                }
-
-            };
+                deleteScoreData(e.target);
+            });
 
         }
+
+        
                 
                 
         //서버의 전체 성적정보 부르기
