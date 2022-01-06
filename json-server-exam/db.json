@@ -15,18 +15,25 @@
       "address": "로스엔젤레스"
     },
     {
-      "id": 3,
-      "account": "ggg1234",
-      "password": "ggg1234",
-      "userName": "마이콜",
-      "address": "대전시 서구"
-    },
-    {
       "id": "11212121",
       "accont": "1212121",
-      "userName": "1212121",
+      "userName": "펫치수정킹",
       "password": "12121212",
-      "address": "12121"
+      "address": "캘리포니아"
+    },
+    {
+      "id": "999",
+      "accont": "fetchfetchfetch",
+      "userName": "페치페치페치",
+      "password": "12345",
+      "address": "대전 서구"
+    },
+    {
+      "id": "001",
+      "accont": "공공공",
+      "userName": "공공",
+      "password": "123",
+      "address": "12"
     }
   ]
 }
